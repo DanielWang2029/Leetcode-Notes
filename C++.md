@@ -98,3 +98,13 @@ vector<int> vec = {1, 2, 3, 4, 5};
 vector<int> subvec1(vec.begin() + 2, vec.begin() + 4);  // {3, 4}
 vector<int> subvec1(&vec[0], &vec[3]);  // {1, 2, 3}
 ```
+
+### Circular shift a vector
+
+```cpp
+vector<int> vec = {1, 2, 3, 4, 5, 6, 7};
+int shift = 3;
+std::reverse(vec.begin(), vec.end() - shift);  // {1, 2, 3, 4, 7, 6, 5}
+std::reverse(vec.end() - shift, vec.end());  // {4, 3, 2, 1, 7, 6, 5}
+std::reverse(vec.begin(), vec.end());  // {5, 6, 7, 1, 2, 3, 4}
+```
