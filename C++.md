@@ -91,6 +91,13 @@ vector<int> vec = {4, 5, 2, 3, 1};
 int max = *std::max_element(vec.begin(), vec.end());  // 5
 ```
 
+### Sum of a vector
+
+```cpp
+vector<int> vec = {1, 2, 3, 4, 5};
+int sum = std::accumulate(vec.begin(), vec.end(), 0);  // 15
+```
+
 ### Form a subvector from vector
 
 ```cpp
