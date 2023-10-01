@@ -20,6 +20,21 @@ myMax<char>('g', 'e');  // call myMax for char
 
 Note that keyword ***class*** and ***typename*** are interchangeable (in general).
 
+### Switch statement
+
+```cpp
+switch (input) {
+    case 'case 1':
+        return 1;
+    case 'case 2':
+        return 2;
+    case 'case 3':
+        return 3;
+    default:
+        return 0;
+}
+```
+
 ## Class
 
 ### Initialize a class
