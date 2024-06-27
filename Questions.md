@@ -45,7 +45,7 @@ Next we want to argue that s should be larger than the sum of x1 and x2, which i
 
 We can further show that s should be larger than the sum of x1, x2, and x3, which is the third largest value inside arr. This is because if s is smaller or equal to x1 + x2 + x3, but larger than x1 + x2, we can find a set of values from arr, set3, that sums to s - x1 - x2 since s - x1 - x2 < x1. We can observe that x1 and x2 is not in set3 because the sum of set3, s - x1 - x2, is smaller than x1 or x2, and a new set = set3 + {x1, x2} sums to s. Therefore it contradicts the definition that s is not sumable.
 
-Now by induction we could show that s is greater than the sum of x1, x2, ... xn, which means that s is greater than the sum of arr. Therefore the smallest s possible is sum(arr) + 1.
+Now by induction we could show that s is greater than the sum of x1, x2, ..., xn, which means that s is greater than the sum of arr. Therefore the smallest s possible is sum(arr) + 1.
 
 For guess #2, we can prove it using the result from guess #1.
 
