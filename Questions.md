@@ -38,7 +38,9 @@ TODO
 ### 330 Patching array
 
 ***Difficult: 9/10***
+
 ***Interesting: 10/10***
+
 ***Educating: 1/10***
 
 ![330](images/330.png)
@@ -80,7 +82,9 @@ Now that we've proved these assumptions, its easy to write a code to solve this 
 ### 1438 Longest cont subarray w/ abs diff limit
 
 ***Difficult: /10***
+
 ***Interesting: /10***
+
 ***Educating: /10***
 
 ![1438](images/1438.png)
@@ -90,7 +94,9 @@ TODO
 ### 2009 Min number of operation to make array continuous
 
 ***Difficult: /10***
+
 ***Interesting: /10***
+
 ***Educating: /10***
 
 ![2009](images/2009.png)
@@ -102,7 +108,9 @@ TODO
 ### 1038 BST to Greater Sum Tree
 
 ***Difficult: 3/10***
+
 ***Interesting: 1/10***
+
 ***Educating: 8/10***
 
 ![1038](images/1038.png)
@@ -120,7 +128,9 @@ Here s2 serve as a path tracker or visited map. If a parent node is visited for 
 ### 1579 Remove max # of edges to keep graph fully traversable
 
 ***Difficult: 8/10***
+
 ***Interesting: 7/10***
+
 ***Educating: 7/10***
 
 ![1579](images/1579.png)
