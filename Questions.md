@@ -19,7 +19,7 @@ There's another approach to this problem: disjoint set. We could sort the days a
 
 ### 330 Patching array
 
-***Difficult: 8/10***
+***Difficult: 9/10***
 ***Interesting: 10/10***
 ***Educating: 1/10***
 
@@ -96,3 +96,19 @@ How to solve this problem using postorder by recursion is relatively easy. A goo
 We can start with two stacks, one have root in it, s1, and another empty, s2, and a sum calculator x = 0. While s1 is not empty, pop the top item in s1 as curr. If curr is a leaf node, update curr.val and x accordingly. If curr is equal to the top item in s2, update curr.val and x accordingly and pop the top itme in s2. In all other cases, push curr.left to s1 if its not none, push curr to s1 again, push curr to s2, and push curr.right to s1 if its not none. Return root at the end.
 
 Here s2 serve as a path tracker or visited map. If a parent node is visited for the first time, we add its children to the stack as well as itself, without processing it. The next time this node appears, we process it and does not add anything to the stack to prevent infinite loop.
+
+## 5. Graph
+
+### 1579 Remove max # of edges to keep graph fully traversable
+
+***Difficult: 8/10***
+***Interesting: 7/10***
+***Educating: 5/10***
+
+![1038](images/1579.png)
+
+TODO
+
+
+
+
