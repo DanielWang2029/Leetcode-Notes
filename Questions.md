@@ -3,10 +3,14 @@
 
 ## 1. Binary Search
 
+When you notice that the problem need to be solved within O(nlog(n)) or faster, or O(log(n)) appears in any forms, try binary search!!!
+
 ### 1482 Min days to make n bouquets
 
-***Difficult: 7/10***
+***Difficult: 6/10***
+
 ***Interesting: 6/10***
+
 ***Educating: 9/10***
 
 ![1482](images/1482.png)
@@ -14,6 +18,20 @@
 The common way to solve this problem is binary search. Think about the runtime to check if a given result would satisfy the criteria. It suppose to be O(n). Then we can perform a binary search on the result within the max and min of the given days and would produce a result within O(nlog(n)). If the values of the days array is unbounded, we could sort the array first and perform binary search on the indexes of the array instead.
 
 There's another approach to this problem: disjoint set. We could sort the days array and add each day sequentially while maintain a dictionary of the current status, i.e. ranges of blooming flowers. For each newly added position, we try to merge it into adjacent existing ranges, or create a new range itself, as well as maintaining the current max bouquets number, all in constant time. This way there's constant runtime for each position added and every position is added only once therefore the runtime for adding position is O(n). However, since we sorted the days array in the begining, the overall runtime is also O(nlog(n)).
+
+### 1552 Magnetic Force b/t Balls
+
+***Difficult: 7/10***
+
+***Interesting: 5/10***
+
+***Educating: 10/10***
+
+![1552](images/1552.png)
+
+The reason this question is very educating is that there's only one way to solve it within the required timeframe: binary search.
+
+TODO
 
 ## 2. Math
 
@@ -85,7 +103,7 @@ TODO
 
 ***Difficult: 3/10***
 ***Interesting: 1/10***
-***Educating: 6/10***
+***Educating: 8/10***
 
 ![1038](images/1038.png)
 
@@ -103,9 +121,9 @@ Here s2 serve as a path tracker or visited map. If a parent node is visited for 
 
 ***Difficult: 8/10***
 ***Interesting: 7/10***
-***Educating: 5/10***
+***Educating: 7/10***
 
-![1038](images/1579.png)
+![1579](images/1579.png)
 
 TODO
 
