@@ -77,7 +77,21 @@ Now we use the result from guess #1 again which gives us the total sumable numbe
 
 Now that we've proved these assumptions, its easy to write a code to solve this problem in O(log(n)): Start with an empty list, arr, and a counter, result, calculate the current s = sum(arr) + 1. If the first value in arr smaller or equal to s, remove it from nums and add it to arr. If the first value is larger than s, add s to arr and add 1 to result. Now recalculate s and repeat this process again until s > n. Return the counter, result.
 
-## 3. Sliding Window
+## 3. Dynamic Programming
+
+### 956 Tallest Billboard
+
+***Difficult: /10***
+
+***Interesting: /10***
+
+***Educating: /10***
+
+![956](images/956.png)
+
+TODO
+
+## 4. Sliding Window
 
 ### 1438 Longest cont subarray w/ abs diff limit
 
@@ -103,7 +117,7 @@ TODO
 
 TODO
 
-## 4. Tree
+## 5. Tree
 
 ### 1038 BST to Greater Sum Tree
 
@@ -123,7 +137,7 @@ We can start with two stacks, one have root in it, s1, and another empty, s2, an
 
 Here s2 serve as a path tracker or visited map. If a parent node is visited for the first time, we add its children to the stack as well as itself, without processing it. The next time this node appears, we process it and does not add anything to the stack to prevent infinite loop.
 
-## 5. Graph
+## 6. Graph
 
 ### 1579 Remove max # of edges to keep graph fully traversable
 
@@ -134,20 +148,6 @@ Here s2 serve as a path tracker or visited map. If a parent node is visited for 
 ***Educating: 7/10***
 
 ![1579](images/1579.png)
-
-TODO
-
-## 6
-
-### 956 Tallest Billboard
-
-***Difficult: /10***
-
-***Interesting: /10***
-
-***Educating: /10***
-
-![956](images/956.png)
 
 TODO
 
