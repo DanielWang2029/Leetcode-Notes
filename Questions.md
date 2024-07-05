@@ -1,11 +1,8 @@
-
-# Question specific thoughts
-
-## 1. Binary Search
+# 1. Binary Search
 
 When you notice that the problem need to be solved within O(nlog(n)) or faster, or O(log(n)) appears in any forms, try binary search!!!
 
-### 1482 Min days to make n bouquets
+## 1482 Min days to make n bouquets
 
 ***Difficult: 6/10***
 
@@ -19,7 +16,7 @@ The common way to solve this problem is binary search. Think about the runtime t
 
 There's another approach to this problem: disjoint set. We could sort the days array and add each day sequentially while maintain a dictionary of the current status, i.e. ranges of blooming flowers. For each newly added position, we try to merge it into adjacent existing ranges, or create a new range itself, as well as maintaining the current max bouquets number, all in constant time. This way there's constant runtime for each position added and every position is added only once therefore the runtime for adding position is O(n). However, since we sorted the days array in the begining, the overall runtime is also O(nlog(n)).
 
-### 1552 Magnetic Force b/t Balls
+## 1552 Magnetic Force b/t Balls
 
 ***Difficult: 7/10***
 
@@ -33,9 +30,9 @@ The reason this question is very educating is that there's only one way to solve
 
 TODO
 
-## 2. Math
+# 2. Math
 
-### 330 Patching array
+## 330 Patching array
 
 ***Difficult: 9/10***
 
@@ -77,9 +74,9 @@ Now we use the result from guess #1 again which gives us the total sumable numbe
 
 Now that we've proved these assumptions, its easy to write a code to solve this problem in O(log(n)): Start with an empty list, arr, and a counter, result, calculate the current s = sum(arr) + 1. If the first value in arr smaller or equal to s, remove it from nums and add it to arr. If the first value is larger than s, add s to arr and add 1 to result. Now recalculate s and repeat this process again until s > n. Return the counter, result.
 
-## 3. Dynamic Programming
+# 3. Dynamic Programming
 
-### 956 Tallest Billboard
+## 956 Tallest Billboard
 
 ***Difficult: /10***
 
@@ -91,9 +88,9 @@ Now that we've proved these assumptions, its easy to write a code to solve this 
 
 TODO
 
-## 4. Sliding Window
+# 4. Sliding Window
 
-### 1438 Longest cont subarray w/ abs diff limit
+## 1438 Longest cont subarray w/ abs diff limit
 
 ***Difficult: /10***
 
@@ -105,7 +102,7 @@ TODO
 
 TODO
 
-### 2009 Min number of operation to make array continuous
+## 2009 Min number of operation to make array continuous
 
 ***Difficult: /10***
 
@@ -117,9 +114,9 @@ TODO
 
 TODO
 
-## 5. Tree
+# 5. Tree
 
-### 1038 BST to Greater Sum Tree
+## 1038 BST to Greater Sum Tree
 
 ***Difficult: 3/10***
 
@@ -137,9 +134,9 @@ We can start with two stacks, one have root in it, s1, and another empty, s2, an
 
 Here s2 serve as a path tracker or visited map. If a parent node is visited for the first time, we add its children to the stack as well as itself, without processing it. The next time this node appears, we process it and does not add anything to the stack to prevent infinite loop.
 
-## 6. Graph
+# 6. Graph
 
-### 1579 Remove max # of edges to keep graph fully traversable
+## 1579 Remove max # of edges to keep graph fully traversable
 
 ***Difficult: 8/10***
 
