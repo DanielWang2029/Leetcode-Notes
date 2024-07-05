@@ -137,6 +137,20 @@ Here s2 serve as a path tracker or visited map. If a parent node is visited for 
 
 TODO
 
+## 6
+
+### 956 Tallest Billboard
+
+***Difficult: /10***
+
+***Interesting: /10***
+
+***Educating: /10***
+
+![956](images/956.png)
+
+TODO
+
 
 
 
