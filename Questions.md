@@ -166,6 +166,22 @@ TODO
 
 <br/>
 
+## 2392 Build a Matrix with Condition
+
+***Difficult: TODO/10***
+
+***Interesting: TODO/10***
+
+***Educating: TODO/10***
+
+<img src="images/2392.png" alt="Question 2392" width="600"/>
+
+<br/>
+
+TODO
+
+<br/>
+
 # 6. Math
 
 ## 330 Patching array
