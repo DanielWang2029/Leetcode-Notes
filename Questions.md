@@ -176,6 +176,8 @@ TODO
 
 <img src="images/2392.png" alt="Question 2392" width="600"/>
 
+<img src="images/2392-2.png" alt="Question 2392-2" width="600"/>
+
 <br/>
 
 TODO
