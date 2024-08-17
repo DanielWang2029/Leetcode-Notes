@@ -14,7 +14,7 @@ In addition, binary search is also very useful when trying to find things within
 
 <br/>
 
-## 1552 Magnetic Force b/t Balls
+## 1552 Magnetic force b/t balls
 
 ***Difficult: 7/10***
 
@@ -64,7 +64,7 @@ There's another approach to this problem: disjoint set. We could sort the days a
 
 <br/>
 
-## 1508 Range Sum of Sorted Subarray Sums
+## 1508 Range sum of sorted subarray sums
 
 ***Difficult: 3/10***
 
@@ -108,7 +108,7 @@ Now back to the binary search part of our algorithm. Recall that we want to find
 
 Note that this problem only emerges if there exists multiple subarray who's sum is the largest sum of all subarrays. As a result, we want to keep track of the duplicated largest sum of subarrays, or ```6``` in the above example, and the difference between the actual count and the desired count, or ```11 - 10 = 1``` in the above example, and subtract the product of those two values from our ```resultSum``` output. Therefore in our binary search function ```bs(count)``` where ```count``` is our desired number of subarrays, we should return ```resultSum - mid * (result - count)``` given the search result is ```mid = left = right``` and ```f(mid) = (result, resultSum)```. In the above example, ```count = 10```, ```mid = 6```, ```f(6) = (11, 36)```, and ```bs(10) = 36 - 6 * (11 - 10) = 30```.
 
-Another small detail here is that the actual count should always be ***larger or equal*** to the desired count because only then the largest sum of subarrays is ```mid```. In the above example, if the search result is ```mid = 5``` (actual count = ```9```) instead of ```mid = 6``` (actual count = ```11```), we would have subtracted ```5 * (10 - 9)``` from ```resultSum```  and got a wrong solution. To avoid this situation, we need to make sure that ```mid``` is updated by ```mid = (left + right) // 2```, and when the actual count is larger/smaller than desired count, we set ```right = mid``` and ```left = mid + 1```. Using the update method of ```mid = (left + right) // 2 + 1``` would causes troubles, either making the actual count smaller to the desired count, or resulting in binary search stuck in an infinite loop in certain circumstances.
+Another small detail here is that the actual count should always be ***larger or equal*** to the desired count because only then the largest sum of subarrays is ```mid```. In the above example, if the search result is ```mid = 5``` (actual count = ```9```) instead of ```mid = 6``` (actual count = ```11```), we would have subtracted ```5 * (10 - 9)``` from ```resultSum```  and got a wrong answer. To avoid this situation, we need to make sure that ```mid``` is updated by ```mid = (left + right) // 2```, and when the actual count is larger/smaller than desired count, we set ```right = mid``` and ```left = mid + 1```. Using the update method of ```mid = (left + right) // 2 + 1``` would causes troubles, either making the actual count smaller to the desired count, or resulting in binary search stuck in an infinite loop in certain circumstances.
 
 Lastly, note that this approach only works if all the values are non-negative. If negative number exists, theoretically we could add ```-min(nums)``` to all values in ```nums``` to avoid failure. However, this will increase ```sum(nums)``` and therefore increase the runtime for the entire algorithm. So further analysis should be done case by case to determine which approach is better.
 
@@ -116,19 +116,39 @@ Lastly, note that this approach only works if all the values are non-negative. I
 
 # 2. Dynamic Programming
 
-## 956 Tallest Billboard
+## 956 Tallest billboard
 
 ***Difficult: 10/10***
 
-***Interesting: /10***
+***Interesting: TODO/10***
 
-***Educating: /10***
+***Educating: TODO/10***
 
 <img src="images/956.png" alt="Question 956" width="600"/>
 
 <br/>
 
 TODO
+
+## 714 Best time to buy and sell stock w/ fee
+
+***Difficult: 7/10***
+
+***Interesting: 4/10***
+
+***Educating: 9/10***
+
+<img src="images/714.png" alt="Question 714" width="600"/>
+
+<br/>
+
+It's easy to think about dynamic programming as solution for this question. My initial thought was to keep track of the max profit for prices from index ```0``` to ```k``` where max profit is either the previous max profit at index ```k - 1```, meaning sale were not made on index ```k```, or a prior max profit at index ```i - 1``` plus the profit from buying at index ```i``` and selling at index ```k``` where ```i``` could range from ```0``` to ```k - 1```. But I soon faced the problem where I do not know when the stock is brought in constant time, i.e. do not know what ```i``` should be, leading to a ```O(n)``` runtime to search for optimal ```i``` for each iteration, totalling a ```O(n^2)``` runtime for the entire algorithm.
+
+However, if we think about the states we are in at each index, there's actually only two: either we are holding a stock that's already bought and ready to be sold, or we are not holding any stock and are available to buy a stock. These two states are different but interchangeable based on the current stock price ```p = prices[i]```:
+
+Let ```x``` by the current max profit for state where we're not holding stocks and ```y``` be the current max profit minus the buying price for the stock we're currently holding for state where we're holding a stock. The initial values are ```0``` for ```x``` and ```-prices[0]``` for ```y```. For each iteration, the state where we're not holding stocks could be achieved by either started with nothing in hand and does not buy stock at price ```prices[i]```, or started with a stock in hand and sells it at price ```prices[i]```. This gives us ```x_new = max(x, y + prices[i] - fee)```. Similarly, we could achieve the state where we're holding a stock by either started with a stock in hand and does not sell the stock at price ```prices[i]```, or started with nothing in hand and buys the stock at price ```prices[i]```. This gives us ```y_new = max(y, x - prices[i])``` (we assume ```fee``` only occur during a stock sell).
+
+Using this algorithm, the answer we're looking for is ```x``` after iterating through all prices. Here although ```y``` has nothing to do with the final result, it serves as a crucial intermediate step that supports the generation of ```x``` for each iteration.
 
 <br/>
 
@@ -160,11 +180,11 @@ This method is valid because the deque, take the max deque as an example, is mai
 
 ## 2009 Min number of operation to make array continuous
 
-***Difficult: /10***
+***Difficult: 6/10***
 
-***Interesting: /10***
+***Interesting: 6/10***
 
-***Educating: /10***
+***Educating: 7/10***
 
 <img src="images/2009.png" alt="Question 2009" width="600"/>
 
@@ -172,13 +192,19 @@ This method is valid because the deque, take the max deque as an example, is mai
 
 There's two different way to solve this question: sliding window, and perhaps surprisingly, binary search.
 
-TODO
+First, we want to sort all ***distinct*** elements of the array in ascending order as the order of the elements has no effect on the result and each element is only utilized once, making duplicated elements useless. This takes ```O(nlog(n))``` time and we will do this regardless of which solution we use.
+
+For the sliding window approach, we keep track of a window where the max difference of elements in the window is smaller or equal to the size of the array, i.e. ```window[-1] - window[0] < len(nums)```. We do this by keeping track of a left and a right pointer indicating the window position. We move right pointer to the right as long as the criteria is satisfied. If the criteria is broken, we move our left pointer to the right until the criteria is met again. During the sliding of window, we record the size of valid windows, ```size```, which is the number of distinct elements within range of ```[window[-1], window[-1] + len(nums) - 1]```. The result is hence ```len(nums) - max(size)``` for all valid windows, because the bigger a window is, the smaller number of elements outside of the required range is, and therefore less operation is required.
+
+For the binary search approach, we are still trying to find corresponding windows and calculate their size. However, notice that for each element in this distinct sorted array there's a valid window that starts at that element, and the right pointer is the rightmost element that satisfy the criteria ```window[-1] - window[0] < len(nums)```. Hence we can iterate the distinct sorted array, using each elements as the start of the window, and get the window boundary by using binary search on the right pointer, which takes ```O(log(n))``` for each iteration. Then we can get the minimum number of operation using similar logic on the length of ```nums``` and the maximum size of all valid windows.
+
+Both approach take ```O(nlog(n))``` time due to the initial distinct sort.
 
 <br/>
 
 # 4. Tree
 
-## 1038 BST to Greater Sum Tree
+## 1038 BST to greater sum tree
 
 ***Difficult: 3/10***
 
@@ -200,13 +226,13 @@ Here ```s2``` serve as a path tracker or visited map. If a parent node is visite
 
 <br/>
 
-## 1395 Count Number of Teams
+## 1395 Count number of teams
 
-***Difficult: TODO/10***
+***Difficult: 5/10***
 
-***Interesting: TODO/10***
+***Interesting: 4/10***
 
-***Educating: TODO/10***
+***Educating: 9/10***
 
 <img src="images/1395.png" alt="Question 1395" width="600"/>
 
@@ -216,7 +242,7 @@ After some consideration, we could arrive at a ```O(n^2)``` solution by examinin
 
 For each index ```i```, we calculate how many ascending teams can be formed using ```rating[i]``` as the middle soldier by counting the number of soldiers who have a rating lower than it to the left, ```lowerLeftCount```, and multiply it with the number of soldiers who have a rating hight than it to the right, ```higherRightCount```. For descending teams, we could using ```higherLeftCount``` times ```lowerRightCount```, all done within ```O(n)``` time for each ```i```.
 
-However, there's different approach which utilizes Binary Indexed Tree (Fenwick Tree) and have a runtime of ```O(nlog(max(rating)))```. It will significantly reduces the runtime given that the maximum rating for the soldiers are not too crazy.
+However, there's different approach which utilizes ***Binary Indexed Tree (Fenwick Tree)*** and have a runtime of ```O(nlog(max(rating)))```. It will significantly reduces the runtime given that the maximum rating for the soldiers are not too crazy.
 
 To recap, binary index trees are binary search complete trees who's inorder traversal gives the values in ascending index (```0``` to ```n```). It is implemented using just an array and it uses the binary representation of indexes to traverse the tree. Each node of the tree contains the the value of itself plus the cumulative sum of values of its left tree. My own implementation of Binary Indexed Tree could be found [here](https://github.com/DanielWang2029/Python-and-Algorithms/blob/master/Data_Structures_and_Algorithms/Binary_Index_Tree.py).
 
@@ -234,17 +260,25 @@ Do the same (with a little different update method) to calculate the descending 
 
 ***Interesting: 7/10***
 
-***Educating: TODO/10***
+***Educating: 8/10***
 
 <img src="images/1579.png" alt="Question 1579" width="600"/>
 
 <br/>
 
-TODO
+The typical approach to this questions is disjoint set. The main idea is to count the number of edges required to connect all vertices using two separate disjoint set for Alice and Bob, prioritizing shared edges, and return the number of edges minus the required number of edges.
+
+Let ```ds```, ```ds1```, ```ds2``` be arrays with length ```n``` representing different disjoint sets. Let ```result``` be the number of edges required to make graph fully traversable for Alice and Bob. We iterate ```edges``` for the first time, only at edges ```[type, u, v]``` that have ```type = 3```, and check if ```u``` and ```v``` are in the same group by checking if their roots are the same. If they are not, we union them together in ```ds``` and add ```1``` to ```result```. This create a disjoint set ```ds``` that represents the connected groups for both Alice and Bob because the edges are shared.
+
+Now we let ```ds1``` and ```ds2``` equal to ```ds```. We then iterate ```edges``` for the second time, only at edges ```[type, u, v]``` that have ```type = 1```, and check if ```u``` and ```v``` are in the same group. If not, we union them together in ```ds1``` and add ```1``` to ```result```. This create a disjoint set ```ds1``` that represents the connected groups for Alice only. If any of the vertices are not connected to root (vertex ```0```), i.e. there exist more than one group in ```ds1```, we know that this graph is not fully traversable for Alice even with all available edges and we should return ```-1```.
+
+Similar to how we deal with Alice using ```ds1```, we iterate ```edges``` one more time, do the same for Bob using ```ds2```, and return ```-1``` if the graph is not fully connected with all available edges. Otherwise, we return ```len(edges) - result``` because all edges except the required to make graph fully traversable are the edges that can be removed.
+
+On a side note, there exists ```O(n)``` solutions. In fact, my first successful submission takes ```O(n)``` time in theory, but in reality it takes way more time than ```O(nlog(n))``` solutions and even I cannot easily recreate the logic behind it.
 
 <br/>
 
-## 2392 Build a Matrix with Condition
+## 2392 Build a matrix with condition
 
 ***Difficult: 8/10***
 
@@ -280,7 +314,7 @@ Node that Kahn's algorithm only works on ***directed*** and ***acyclic*** graph.
 
 <br/>
 
-## 1334 Find the City w/ Min # of Neighbor at a Threshold Distance
+## 1334 Find the city w/ min # of neighbor at a threshold distance
 
 ***Difficult: 7/10***
 
@@ -364,7 +398,7 @@ Similar to Bellman-Ford Algorithm, Floyd-Warshall algorithm can also be used to 
 
 # 6. Union Find
 
-## 959 Regions Cut by Slashes
+## 959 Regions cut by slashes
 
 ***Difficult: 4/10***
 
