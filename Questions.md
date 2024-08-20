@@ -424,7 +424,29 @@ This solution have ```(n + 1)^2``` points as base elements therefore the runtime
 
 <br/>
 
-# 7. Math
+# 7. Backtracking
+
+## 40 Combination sum II
+
+***Difficult: 6/10***
+
+***Interesting: 4/10***
+
+***Educating: 7/10***
+
+<img src="images/40.png" alt="Question 40" width="600"/>
+
+<br/>
+
+This question could be solved using backtracking. Backtracking incrementally builds candidates to the solutions and abandons a candidate (backtracks) as soon as it determines that this candidate can't lead to a final solution.
+
+***In fact, backtracking can be effectively used to solve questions that require the generation of all the possible combinations recursively.***
+
+In this question, we can sort the ```candidates``` first and keep track of a list of values, initialized to contain the smallest value, while attempting to add additional values from ```candidates```. If adding a new value takes the sum of our list over ```target```, we do not add that value and pop one value from the end of our list instead. Then we attempt to add a value that is bigger to the popped one (skip duplicated values) from the sorted ```candidates```. If adding a new value makes the sum of our list equal ```target```, we write down the current list along with the new value into ```result``` and again pop one value from the end of our list and attempt to add a value that is bigger. If adding a new value still results in smaller list sum than ```target```, we attempt to add the next value in our sorted ```candidates``` (could be the same value if duplicated). We break from this iteration after no values could be added to the list and no values could be further popped (i.e. we've attempted all values as the first value in our list).
+
+<br/>
+
+# 8. Math
 
 ## 330 Patching array
 
