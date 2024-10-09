@@ -46,6 +46,8 @@ To reflect the general characteristics of binary search in the case of this ques
 
 Therefore when facing a question with similar characteristics, always gives binary search a try.
 
+<br/>
+
 ## 1482 Min days to make n bouquets
 
 ***Difficult: 6/10***
@@ -66,9 +68,9 @@ There's another approach to this problem: disjoint set. We could sort the days a
 
 ## 1508 Range sum of sorted subarray sums
 
-***Difficult: 3/10***
+***Difficult: 4/10***
 
-***Interesting: 2/10***
+***Interesting: 3/10***
 
 ***Educating: 10/10***
 
@@ -118,23 +120,73 @@ Lastly, note that this approach only works if all the values are non-negative. I
 
 ## 956 Tallest billboard
 
-***Difficult: 10/10***
+***Difficult: 9/10***
 
-***Interesting: TODO/10***
+***Interesting: 7/10***
 
-***Educating: TODO/10***
+***Educating: 9/10***
 
 <img src="images/956.png" alt="Question 956" width="600"/>
 
 <br/>
 
-TODO
+For this question, I cheated a little bit and saw the topic for this question is dynamic programming and therefore know the solution involves some kind of dp, which makes it less difficult than it supposed to be. Nevertheless, its still an hard and interesting dp question to solve.
+
+***Dynamic programming is somewhat like mathematical induction, we want to solve a bigger question incrementally using the results from previous derived smaller questions.***
+
+Using this dynamic programming mindset, we want to first determine how could we divide our big question into smaller questions. In the case of this question, we have several options:
+
+1. Increment on the height. Remember some info about the billboard of height in ```[1, h]``` and use that to determine whether we could support a billboard of height ```h + 1``` using all tiles.
+
+2. Increment on the tiles used. Remember some info about the billboards we could support using the first ```[1, i]``` tiles and use that to determine the billboards we could support using the first ```i + 1``` tiles.
+
+3. Combine the two thoughts above and increment on both the height as well as the tiles used. Remember some info about the support of billboards of height in ```[1, h]``` using the first ```[1, i]``` tiles and use that to determine whether we could
+
+   1. support a billboard of height ```h + 1``` using the first ```i``` tiles, or
+
+   2. support a billboard of height ```h``` using the first ```i + 1``` tiles.
+
+   The reason its ***or*** but rather ***and*** here is that its easy to figure out the base cases in our 2d dynamic programming for this question, i.e. its easy to figure out whether we could support a billboard of height ```1``` using the first ```[1, i]``` tiles and whether we could support a billboard of height ```[1, h]``` using the first ```1``` tile. Therefore as long as we could increment our dp array in one direction using the results already derived (also 2d), we are good to go. Think about it as we already have the two axis of our dp array and we only need the ability to move in one direction to fill in all the values in that array.
+
+After some thoughts we could find out none of the methods works using normal dp tricks. However, the second option gives us some insight about how we could proceed further by expanding the normal 1d dp into a 2d dp (which is different from the third option).
+
+Think about the information needed on the first ```[1, i - 1]``` tiles for us to determine if we could support a billboard with height ```h``` using the first ```[1, i]``` tiles. There's actually only two scenarios:
+
+1. We do not use tile ```i``` to support our billboard. This means whether we could support the billboard or not does not change with the addition of tile ```i```, i.e. ```f(h, i) = f(h, i - 1)``` for some dp function ```f```. No info is needed to calculate this given the results from previous sub-problems (```f(h, i - 1)```).
+
+2. We use tile ```i``` to support our billboard. This means we should be able to build two pillars that have height of ```h``` and ```h - rods[i]```. Additional info about whether we could support two pillars with difference ```rods[i]``` from previous sub-problems is needed.
+
+From there, we could find out that the info we needed to inherit from previous sub-problems is whether we could support two pillars with difference ```d```, which has a upper bound of ```sum(rods)```, instead of the original setup where info is only given on two pillars with the same height.
+
+As a result, we could setup our 2d dp array ```arr``` like this:
+
+1. ```arr``` has size ```len(rods) * sum(rods)``` and is initialized as all ```-1```s.
+
+2. ```arr[i][h]``` represents the maximum height of the higher pillar if we could use first ```i``` tiles to build two pillars that have a height difference of ```h```, or ```-1``` if we could not build such pillars.
+
+3. The base case is given by ```arr[0][0] = 0``` and ```arr[0][rods[0]] = rods[0]```.
+
+Since we've added an additional dimension in our dp array, we need to rethink about the scenarios and how to update our dp array ```arr``` accordingly:
+
+1. Same as before, we do not use tile ```i``` and therefore ```arr[i][h] = arr[i - 1][h]```, meaning the height of the higher pillars we could build using the first ```i``` tiles where two pillars have a height difference of ```h``` is the same as the height of the higher pillars we could build using the first ```i - 1``` tiles.
+
+2. We use tile ```i``` in the lower pillar. This means the height of the higher pillar does not change and its the same as the higher pillar we could build using the first ```i - 1``` tiles where two pillars previously have a height difference of ```h + rods[i]```. Therefore we have ```arr[i][h] = arr[i - 1][h + rods[i]]```.
+
+3. We use tile ```i``` in the higher pillar. This means the previous difference between the current higher pillar and the current lower pillar is ```h - rods[i]```. There's two sub-cases here:
+   1. If ```h``` is larger than ```rods[i]```, we are adding tile ```i``` onto the pillar that is previously higher. Therefore ```arr[i][h] = arr[i - 1][h - rods[i]] + rods[i]``` because ```rods[i]``` is the change of height for the higher pillar.
+   2. If ```h``` is smaller than ```rods[i]```, we are adding tile ```i``` onto the pillar that is previously lower, making it the higher pillar during this operation. Let ```x``` is the height of the pillar that is previously higher, then subsequently ```x - (rods[i] - h)``` is the height of the pillar that is previously lower. The change in height of the higher pillar is therefore ```(x - (rods[i] - h) + rods[i]) - x```, which is ```h```, giving us ```arr[i][h] = arr[i - 1][rods[i] - h] + h```.
+
+   Merging two equations gives us ```arr[i][h] = arr[i - 1][abs(rods[i] - h)] + min(rods[i], h)```.
+
+Together, we have our recurrent relationship: ```arr[i][h] = max(arr[i - 1][h], arr[i - 1][h + rods[i], arr[i - 1][abs(rods[i] - h)] + min(rods[i], h))```. The result we are looking for, after filling all values in our dp array ```arr```, would be ```arr[len(rods)][0]```.
+
+<br/>
 
 ## 714 Best time to buy and sell stock w/ fee
 
 ***Difficult: 7/10***
 
-***Interesting: 4/10***
+***Interesting: 5/10***
 
 ***Educating: 9/10***
 
@@ -177,6 +229,8 @@ Whenever we move the right pointer to the right, we want to insert the new value
 Once the deques are updated, we keep moving the left pointer to the right, remove any bottom values of the deques, namely the largest and smallest value within the subarray, that is equal to the discarded value, until the bottom of the two deques have a absolute difference smaller or equal to the limit.
 
 This method is valid because the deque, take the max deque as an example, is maintained in a way where its sorted in descending order from bottom to top, and each value, if in the deque, is the largest value from the previous max/min (the value one place lower than it in the deque) to the current right end of the array. Therefore when we pop the bottom of the maxdeque/mindeque, the new bottom value is the new max/min of the subarray. A tricky edge case would be duplicate values in the subarray, in which case we keep all the duplicates in the deque.
+
+<br/>
 
 ## 2009 Min number of operation to make array continuous
 
@@ -396,7 +450,65 @@ Similar to Bellman-Ford Algorithm, Floyd-Warshall algorithm can also be used to 
 
 <br/>
 
-# 6. Union Find
+## 2699 Modify graph edge weight
+
+***Difficult: 10/10***
+
+***Interesting: 8/10***
+
+***Educating: TODO/10***
+
+<img src="images/2699.png" alt="Question 2699" width="600"/>
+
+<img src="images/2699-2.png" alt="Question 2699-2" width="600"/>
+
+<img src="images/2699-3.png" alt="Question 2699-3" width="600"/>
+
+<br/>
+
+TODO
+
+<br/>
+
+# 6. Array
+
+## 215 Kth largest element in array
+
+***Difficult: 1/10***
+
+***Interesting: 3/10***
+
+***Educating: 8/10***
+
+<img src="images/215.png" alt="Question 215" width="600"/>
+
+<br/>
+
+It's almost too easy to arrive at a solution with sorting (or heap) The education part of this question, however, lies in the solution that does not uses sorting and takes ```O(n)``` time on average.
+
+TODO(quick select, median of median)
+
+<br/>
+
+# 7. String
+
+## 28 Find first Occurrence index in a string 
+
+***Difficult: 1/10***
+
+***Interesting: 7/10***
+
+***Educating: 9/10***
+
+<img src="images/28.png" alt="Question 28" width="600"/>
+
+<br/>
+
+TODO(kmp table, Rabin-Karp algorithm (hashing))
+
+<br/>
+
+# 8. Union Find
 
 ## 959 Regions cut by slashes
 
@@ -424,7 +536,7 @@ This solution have ```(n + 1)^2``` points as base elements therefore the runtime
 
 <br/>
 
-# 7. Backtracking
+# 9. Backtracking
 
 ## 40 Combination sum II
 
@@ -446,7 +558,7 @@ In this question, we can sort the ```candidates``` first and keep track of a lis
 
 <br/>
 
-# 8. Math
+# 10. Math
 
 ## 330 Patching array
 
