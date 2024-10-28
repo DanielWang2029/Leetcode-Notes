@@ -204,6 +204,28 @@ Using this algorithm, the answer we're looking for is ```x``` after iterating th
 
 <br/>
 
+## 1277 Count Square Submatrices with All 1s
+
+***Difficult: 5/10***
+
+***Interesting: 3/10***
+
+***Educating: 7/10***
+
+<img src="images/1277.png" alt="Question 1277" width="600"/>
+
+<br/>
+
+It's easy to arrive at a DP table where ```dp[i][j]``` being the cumulative sum of values in the top left ```i * j``` square. Then we iterate through all possible side length ```l``` for every point to check if a valid submatrix can be made, which takes ```O(n^3)``` time.
+
+However, there's a better solution that only takes ```O(n^2)``` time:
+
+Consider a point with value equals ```1```. It can make at least 1 valid submatrix (which is itself). Any additional valid submatrices that it can bring to the table depends on 1) the point on the left, 2) the point on the top, and 3) the point on the upperleft. If all of those points have value of ```1```, then the number of valid submatrices the current point can bring is at least ```2```. How do we know if it can bring ```3``` valid submatrices then? We can check all ```9``` points, or we can equivalently check whether the left, top, and upperleft point can bring ```2``` valid submatrices. If all ```9``` points are indeed ```1```, then the number of valid submatrices those three points can bring to the table is all at least ```2```, and vice versa. Therefore we can derive the equation ```dp[i][j] = max(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])``` for our DP table. 
+
+With that, we can simply populate our DP table and return ```sum(dp)```.
+
+<br/>
+
 # 3. Sliding Window
 
 ## 1438 Longest cont subarray w/ abs diff limit
